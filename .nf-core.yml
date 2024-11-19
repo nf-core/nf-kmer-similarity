@@ -1,1 +1,22 @@
+bump_version: null
+lint:
+  files_exist:
+    - conf/igenomes.config
+    - conf/igenomes_ignored.config
+    - conf/igenomes.config
+    - conf/igenomes_ignored.config
+nf_core_version: 3.0.2
+org_path: null
 repository_type: pipeline
+template:
+  author: olgabot, itrujnara
+  description: k-mer similarity analysis pipeline
+  force: true
+  is_nfcore: true
+  name: kmermaid
+  org: nf-core
+  outdir: .
+  skip_features:
+    - igenomes
+  version: 1.0.0dev
+update: null
