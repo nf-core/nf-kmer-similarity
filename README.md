@@ -1,111 +1,104 @@
-# ![nf-core/kmermaid](docs/images/nf-core-kmermaid_logo.png)
+<h1>
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="docs/images/nf-core-kmermaid_logo_dark.png">
+    <img alt="nf-core/kmermaid" src="docs/images/nf-core-kmermaid_logo_light.png">
+  </picture>
+</h1>
 
-**Compare DNA/RNA/protein sequences on k-mer content**.
+[![GitHub Actions CI Status](https://github.com/nf-core/kmermaid/actions/workflows/ci.yml/badge.svg)](https://github.com/nf-core/kmermaid/actions/workflows/ci.yml)
+[![GitHub Actions Linting Status](https://github.com/nf-core/kmermaid/actions/workflows/linting.yml/badge.svg)](https://github.com/nf-core/kmermaid/actions/workflows/linting.yml)[![AWS CI](https://img.shields.io/badge/CI%20tests-full%20size-FF9900?labelColor=000000&logo=Amazon%20AWS)](https://nf-co.re/kmermaid/results)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.XXXXXXX-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.XXXXXXX)
+[![nf-test](https://img.shields.io/badge/unit_tests-nf--test-337ab7.svg)](https://www.nf-test.com)
 
-[![GitHub Actions CI Status](https://github.com/nf-core/kmermaid/workflows/nf-core%20CI/badge.svg)](https://github.com/nf-core/kmermaid/actions)
-[![GitHub Actions Linting Status](https://github.com/nf-core/kmermaid/workflows/nf-core%20linting/badge.svg)](https://github.com/nf-core/kmermaid/actions)
-[![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A520.07.1-23aa62.svg?labelColor=000000)](https://www.nextflow.io/)
+[![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A524.04.2-23aa62.svg)](https://www.nextflow.io/)
+[![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
+[![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
+[![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
+[![Launch on Seqera Platform](https://img.shields.io/badge/Launch%20%F0%9F%9A%80-Seqera%20Platform-%234256e7)](https://cloud.seqera.io/launch?pipeline=https://github.com/nf-core/kmermaid)
 
-[![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg)](https://bioconda.github.io/)
-[![Docker](https://img.shields.io/docker/automated/nfcore/kmermaid.svg)](https://hub.docker.com/r/nfcore/kmermaid)
-[![Cite with Zenodo](https://zenodo.org/badge/197811232.svg)](https://zenodo.org/badge/latestdoi/197811232)
-[![Get help on Slack](http://img.shields.io/badge/slack-nf--core%20%23kmermaid-4A154B?logo=slack)](https://nfcore.slack.com/channels/kmermaid)
+[![Get help on Slack](http://img.shields.io/badge/slack-nf--core%20%23kmermaid-4A154B?labelColor=000000&logo=slack)](https://nfcore.slack.com/channels/kmermaid)[![Follow on Twitter](http://img.shields.io/badge/twitter-%40nf__core-1DA1F2?labelColor=000000&logo=twitter)](https://twitter.com/nf_core)[![Follow on Mastodon](https://img.shields.io/badge/mastodon-nf__core-6364ff?labelColor=FFFFFF&logo=mastodon)](https://mstdn.science/@nf_core)[![Watch on YouTube](http://img.shields.io/badge/youtube-nf--core-FF0000?labelColor=000000&logo=youtube)](https://www.youtube.com/c/nf-core)
 
 ## Introduction
 
-![Workflow overview](docs/images/kmermaid_workflow.png)
+**nf-core/kmermaid** is a bioinformatics pipeline that ...
 
-The pipeline is built using [Nextflow](https://www.nextflow.io), a workflow tool to run tasks across multiple compute infrastructures in a very portable manner. It comes with docker containers making installation trivial and results highly reproducible.
+<!-- TODO nf-core:
+   Complete this sentence with a 2-3 sentence summary of what types of data the pipeline ingests, a brief overview of the
+   major pipeline sections and the types of output it produces. You're giving an overview to someone new
+   to nf-core here, in 15-20 seconds. For an example, see https://github.com/nf-core/rnaseq/blob/master/README.md#introduction
+-->
 
-## Quick Start
+<!-- TODO nf-core: Include a figure that guides the user through the major workflow steps. Many nf-core
+     workflows use the "tube map" design for that. See https://nf-co.re/docs/contributing/design_guidelines#examples for examples.   -->
+<!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->
 
-i. Install [`nextflow`](https://nf-co.re/usage/installation)
-
-ii. Install either [`Docker`](https://docs.docker.com/engine/installation/) or [`Singularity`](https://www.sylabs.io/guides/3.0/user-guide/) for full pipeline reproducibility (please only use [`Conda`](https://conda.io/miniconda.html) as a last resort; see [docs](https://nf-co.re/usage/configuration#basic-configuration-profiles))
-
-iii. Download the pipeline and test it on a minimal dataset with a single command
-
-```bash
-nextflow run nf-core/kmermaid -profile test,<docker/singularity/conda/institute>
-```
-
-> Please check [nf-core/configs](https://github.com/nf-core/configs#documentation) to see if a custom config file to run nf-core pipelines already exists for your Institute. If so, you can simply use `-profile <institute>` in your command. This will enable either `docker` or `singularity` and set the appropriate execution settings for your local compute environment.
-
-iv. Start running your own analysis!
-
-```bash
-nextflow run nf-core/kmermaid -profile <docker/singularity/conda/institute> --input '*_R{1,2}.fastq.gz' --genome GRCh37
-```
-
-See [usage docs](docs/usage.md) for all of the available options when running the pipeline.
-
-## Documentation
-
-The nf-core/kmermaid pipeline comes with documentation about the pipeline, found in the `docs/` directory:
-
-1. [Installation](https://nf-co.re/usage/installation)
-2. Pipeline configuration
-    * [Local installation](https://nf-co.re/usage/local_installation)
-    * [Adding your own system config](https://nf-co.re/usage/adding_own_config)
-    * [Reference genomes](https://nf-co.re/usage/reference_genomes)
-3. [Running the pipeline](docs/usage.md)
-4. [Output and how to interpret the results](docs/output.md)
-5. [Troubleshooting](https://nf-co.re/usage/troubleshooting)
+1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))
+2. Present QC for raw reads ([`MultiQC`](http://multiqc.info/))
 
 ## Usage
 
-### With a samples.csv file
+> [!NOTE]
+> If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
 
-```bash
-nextflow run nf-core/kmermaid --outdir s3://bucket/sub-bucket --samples samples.csv
+<!-- TODO nf-core: Describe the minimum required steps to execute the pipeline, e.g. how to prepare samplesheets.
+     Explain what rows and columns represent. For instance (please edit as appropriate):
+
+First, prepare a samplesheet with your input data that looks as follows:
+
+`samplesheet.csv`:
+
+```csv
+sample,fastq_1,fastq_2
+CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
 ```
 
-### With R1, R2 read pairs
+Each row represents a fastq file (single-end) or a pair of fastq files (paired end).
+
+-->
+
+Now, you can run the pipeline using:
+
+<!-- TODO nf-core: update the following command to include all required parameters for a minimal example -->
 
 ```bash
-nextflow run nf-core/kmermaid --outdir s3://olgabot-maca/nf-kmer-similarity/ \
-  --read_pairs 's3://bucket/sub-bucket/*{R1,R2}*.fastq.gz,s3://bucket/sub-bucket2/*{1,2}.fastq.gz'
+nextflow run nf-core/kmermaid \
+   -profile <docker/singularity/.../institute> \
+   --input samplesheet.csv \
+   --outdir <OUTDIR>
 ```
 
-### With SRA ids
+> [!WARNING]
+> Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
 
-```bash
-nextflow run nf-core/kmermaid --outdir s3://bucket/sub-bucket --sra SRP016501
-```
+For more details and further functionality, please refer to the [usage documentation](https://nf-co.re/kmermaid/usage) and the [parameter documentation](https://nf-co.re/kmermaid/parameters).
 
-### With fasta files
+## Pipeline output
 
-```bash
-nextflow run nf-core/kmermaid --outdir s3://bucket/sub-bucket \
-  --fastas '*.fasta'
-```
-
-### With bam file
-
-```bash
-nextflow run nf-core/kmermaid  --outdir s3://bucket/sub-bucket \
-  --bam 'possorted_genome_bam.bam'
-```
-
-### With split kmer
-
-```bash
-nextflow run nf-core/kmermaid --outdir s3://bucket/sub-bucket --samples samples.csv --split_kmer --subsample 1000
-```
+To see the results of an example test run with a full size dataset refer to the [results](https://nf-co.re/kmermaid/results) tab on the nf-core website pipeline page.
+For more details about the output files and reports, please refer to the
+[output documentation](https://nf-co.re/kmermaid/output).
 
 ## Credits
 
-nf-core/kmermaid was originally written by Olga Botvinnik.
+nf-core/kmermaid was originally written by olgabot, itrujnara.
+
+We thank the following people for their extensive assistance in the development of this pipeline:
+
+<!-- TODO nf-core: If applicable, make list of people who have also contributed -->
 
 ## Contributions and Support
 
 If you would like to contribute to this pipeline, please see the [contributing guidelines](.github/CONTRIBUTING.md).
 
-For further information or help, don't hesitate to get in touch on [Slack](https://nfcore.slack.com/channels/kmermaid) (you can join with [this invite](https://nf-co.re/join/slack)).
+For further information or help, don't hesitate to get in touch on the [Slack `#kmermaid` channel](https://nfcore.slack.com/channels/kmermaid) (you can join with [this invite](https://nf-co.re/join/slack)).
 
-## Citation
+## Citations
 
-If you use  nf-core/kmermaid for your analysis, please cite it using the following doi: [10.5281/zenodo.4143940](https://zenodo.org/record/4143940)
+<!-- TODO nf-core: Add citation for pipeline after first release. Uncomment lines below and update Zenodo doi and badge at the top of this file. -->
+<!-- If you use nf-core/kmermaid for your analysis, please cite it using the following doi: [10.5281/zenodo.XXXXXX](https://doi.org/10.5281/zenodo.XXXXXX) -->
+
+<!-- TODO nf-core: Add bibliography of tools and data used in your pipeline -->
+
+An extensive list of references for the tools used by the pipeline can be found in the [`CITATIONS.md`](CITATIONS.md) file.
 
 You can cite the `nf-core` publication as follows:
 
@@ -113,5 +106,4 @@ You can cite the `nf-core` publication as follows:
 >
 > Philip Ewels, Alexander Peltzer, Sven Fillinger, Harshil Patel, Johannes Alneberg, Andreas Wilm, Maxime Ulysse Garcia, Paolo Di Tommaso & Sven Nahnsen.
 >
-> _Nat Biotechnol._ 2020 Feb 13. doi: [10.1038/s41587-020-0439-x](https://dx.doi.org/10.1038/s41587-020-0439-x).  
-> ReadCube: [Full Access Link](https://rdcu.be/b1GjZ)
+> _Nat Biotechnol._ 2020 Feb 13. doi: [10.1038/s41587-020-0439-x](https://dx.doi.org/10.1038/s41587-020-0439-x).
