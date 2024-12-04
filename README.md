@@ -19,67 +19,82 @@
 
 ## Introduction
 
-**nf-core/kmermaid** is a bioinformatics pipeline that ...
-
-<!-- TODO nf-core:
-   Complete this sentence with a 2-3 sentence summary of what types of data the pipeline ingests, a brief overview of the
-   major pipeline sections and the types of output it produces. You're giving an overview to someone new
-   to nf-core here, in 15-20 seconds. For an example, see https://github.com/nf-core/rnaseq/blob/master/README.md#introduction
--->
+**nf-core/kmermaid** is a bioinformatics pipeline that performs comparative analysis of *omes using k-mer based methods. It supports various reference and sequencing input formats, and provides statistics files along with a MultiQC report as output. It provides pre-processing methods for reads and alignments.
 
 <!-- TODO nf-core: Include a figure that guides the user through the major workflow steps. Many nf-core
      workflows use the "tube map" design for that. See https://nf-co.re/docs/contributing/design_guidelines#examples for examples.   -->
-<!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->
 
-1. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))
-2. Present QC for raw reads ([`MultiQC`](http://multiqc.info/))
+In the outline below, every step except for the main analysis is optional and might be input-dependent.
+
+__Optional – BAM preprocessing__
+
+1. Extract BAM from 10X archive (`tar`)
+2. Extract FASTQ reads ([`samtools`](http://www.htslib.org/))
+3. Split reads per cell (`grep`)
+4. Count UMIs per cell ([`pbtk`](https://github.com/PacificBiosciences/pbtk))
+
+5. Download SRA experiment () [optional]
+
+__Optional – read preprocessing__
+
+6. Trim reads ([`fastp`](https://github.com/OpenGene/fastp))
+7. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))
+8. Remove rRNA ([`sortmerna`](https://github.com/sortmerna/sortmerna))
+9. Translate to protein ([`orpheum`](https://github.com/czbiohub-sf/orpheum))
+
+__k-mer analysis per method__
+
+10. Create sketch
+11. Calculate distances
+
+12. Present the results ([`MultiQC`](http://multiqc.info/))
+
+
 
 ## Usage
 
-> [!NOTE]
-> If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
-
-<!-- TODO nf-core: Describe the minimum required steps to execute the pipeline, e.g. how to prepare samplesheets.
-     Explain what rows and columns represent. For instance (please edit as appropriate):
-
-First, prepare a samplesheet with your input data that looks as follows:
-
-`samplesheet.csv`:
-
-```csv
-sample,fastq_1,fastq_2
-CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
-```
-
-Each row represents a fastq file (single-end) or a pair of fastq files (paired end).
-
--->
-
-Now, you can run the pipeline using:
-
-<!-- TODO nf-core: update the following command to include all required parameters for a minimal example -->
+### With a samples.csv file
 
 ```bash
-nextflow run nf-core/kmermaid \
-   -profile <docker/singularity/.../institute> \
-   --input samplesheet.csv \
-   --outdir <OUTDIR>
+nextflow run nf-core/kmermaid --outdir s3://bucket/sub-bucket --samples samples.csv
 ```
 
-> [!WARNING]
-> Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).
+### With R1, R2 read pairs
 
-For more details and further functionality, please refer to the [usage documentation](https://nf-co.re/kmermaid/usage) and the [parameter documentation](https://nf-co.re/kmermaid/parameters).
+```bash
+nextflow run nf-core/kmermaid --outdir s3://olgabot-maca/nf-kmer-similarity/ \
+  --read_pairs 's3://bucket/sub-bucket/*{R1,R2}*.fastq.gz,s3://bucket/sub-bucket2/*{1,2}.fastq.gz'
+```
 
-## Pipeline output
+### With SRA ids
 
-To see the results of an example test run with a full size dataset refer to the [results](https://nf-co.re/kmermaid/results) tab on the nf-core website pipeline page.
-For more details about the output files and reports, please refer to the
-[output documentation](https://nf-co.re/kmermaid/output).
+```bash
+nextflow run nf-core/kmermaid --outdir s3://bucket/sub-bucket --sra SRP016501
+```
+
+### With fasta files
+
+```bash
+nextflow run nf-core/kmermaid --outdir s3://bucket/sub-bucket \
+  --fastas '*.fasta'
+```
+
+### With bam file
+
+```bash
+nextflow run nf-core/kmermaid  --outdir s3://bucket/sub-bucket \
+  --bam 'possorted_genome_bam.bam'
+```
+
+### With split kmer
+
+```bash
+nextflow run nf-core/kmermaid --outdir s3://bucket/sub-bucket --samples samples.csv --split_kmer --subsample 1000
+```
 
 ## Credits
 
-nf-core/kmermaid was originally written by olgabot, itrujnara.
+nf-core/kmermaid was originally written by Olga Botvinnik. The DSL2 port is done by Igor Trujnara.
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 
