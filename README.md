@@ -19,14 +19,14 @@
 
 ## Introduction
 
-**nf-core/kmermaid** is a bioinformatics pipeline that performs comparative analysis of *omes using k-mer based methods. It supports various reference and sequencing input formats, and provides statistics files along with a MultiQC report as output. It provides pre-processing methods for reads and alignments.
+**nf-core/kmermaid** is a bioinformatics pipeline that performs comparative analysis of \*omes using k-mer based methods. It supports various reference and sequencing input formats, and provides statistics files along with a MultiQC report as output. It provides pre-processing methods for reads and alignments.
 
 <!-- TODO nf-core: Include a figure that guides the user through the major workflow steps. Many nf-core
      workflows use the "tube map" design for that. See https://nf-co.re/docs/contributing/design_guidelines#examples for examples.   -->
 
 In the outline below, every step except for the main analysis is optional and might be input-dependent.
 
-__Optional – BAM preprocessing__
+**Optional – BAM preprocessing**
 
 1. Extract BAM from 10X archive (`tar`)
 2. Extract FASTQ reads ([`samtools`](http://www.htslib.org/))
@@ -35,21 +35,19 @@ __Optional – BAM preprocessing__
 
 5. Download SRA experiment () [optional]
 
-__Optional – read preprocessing__
+**Optional – read preprocessing**
 
 6. Trim reads ([`fastp`](https://github.com/OpenGene/fastp))
 7. Read QC ([`FastQC`](https://www.bioinformatics.babraham.ac.uk/projects/fastqc/))
 8. Remove rRNA ([`sortmerna`](https://github.com/sortmerna/sortmerna))
 9. Translate to protein ([`orpheum`](https://github.com/czbiohub-sf/orpheum))
 
-__k-mer analysis per method__
+**k-mer analysis per method**
 
 10. Create sketch
 11. Calculate distances
 
 12. Present the results ([`MultiQC`](http://multiqc.info/))
-
-
 
 ## Usage
 
